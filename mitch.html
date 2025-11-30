@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mitch的作品</title>
+    <!-- 引入Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome图标 -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- 自定义Tailwind配置 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#36CBCB',
+                        dark: '#1E293B',
+                        light: '#F8FAFC'
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'system-ui', 'sans-serif'],
+                        logo: ['Montserrat', 'sans-serif']
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .card-hover {
+                transition: all 0.3s ease;
+            }
+            .card-hover:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px -5px rgba(22, 93, 255, 0.1);
+            }
+            .section-fade {
+                opacity: 0;
+                transform: translateY(20px);
+                transition: opacity 0.8s ease, transform 0.8s ease;
+            }
+            .section-fade.active {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            .file-drop {
+                border: 2px dashed #CBD5E1;
+                transition: all 0.3s ease;
+            }
+            .file-drop:hover, .file-drop.active {
+                border-color: #165DFF;
+                background-color: rgba(22, 93, 255, 0.05);
+            }
+            /* Mitch标志样式 */
+            .logo-m {
+                color: #165DFF;
+                font-weight: 800;
+                font-size: 1.8rem;
+                line-height: 1;
+                position: relative;
+                top: 2px;
+            }
+            .logo-i {
+                color: #36CBCB;
+                font-weight: 700;
+                font-size: 1.6rem;
+                position: relative;
+                top: -1px;
+            }
+            .logo-t {
+                color: #165DFF;
+                font-weight: 700;
+                font-size: 1.7rem;
+                position: relative;
+                top: 1px;
+            }
+            .logo-c {
+                color: #36CBCB;
+                font-weight: 700;
+                font-size: 1.7rem;
+                position: relative;
+                top: -2px;
+            }
+            .logo-h {
+                color: #165DFF;
+                font-weight: 800;
+                font-size: 1.8rem;
+                position: relative;
+                top: 2px;
+            }
+            .logo-dot {
+                display: inline-block;
+                width: 4px;
+                height: 4px;
+                background-color: #36CBCB;
+                border-radius: 50%;
+                position: relative;
+                top: -6px;
+                left: -2px;
+            }
+            .logo-container {
+                display: inline-flex;
+                align-items: center;
+                gap: 1px;
+                font-family: 'Montserrat', sans-serif;
+                letter-spacing: -1px;
+            }
+        }
+    </style>
+    <!-- 引入Google字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+</head>
+<body class="font-inter bg-light text-dark">
+    <!-- 导航栏 -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-transparent">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-white text-shadow flex items-center">
+                <div class="logo-container mr-2">
+                    <span class="logo-m">M</span>
+                    <span class="logo-i">i</span><span class="logo-dot"></span>
+                    <span class="logo-t">t</span>
+                    <span class="logo-c">c</span>
+                    <span class="logo-h">h</span>
+                </div>
+                <span>的作品</span>
+            </a>
+            <div class="hidden md:flex space-x-8">
+                <a href="#hero" class="text-white hover:text-secondary transition-colors">首页</a>
+                <a href="#about" class="text-white hover:text-secondary transition-colors">关于我</a>
+                <a href="#works" class="text-white hover:text-secondary transition-colors">作品展示</a>
+                <a href="#upload" class="text-white hover:text-secondary transition-colors">上传作品</a>
+                <a href="#contact" class="text-white hover:text-secondary transition-colors">联系我</a>
+            </div>
+            <button class="md:hidden text-white text-2xl" id="menuBtn">
+                <i class="fa fa-bars"></i>
+            </button>
+        </div>
+        <!-- 移动端菜单 -->
+        <div id="mobileMenu" class="hidden md:hidden bg-dark/95 absolute w-full">
+            <div class="container mx-auto px-4 py-4 flex flex-col space-y-4">
+                <a href="#hero" class="text-white hover:text-secondary py-2 border-b border-gray-700">首页</a>
+                <a href="#about" class="text-white hover:text-secondary py-2 border-b border-gray-700">关于我</a>
+                <a href="#works" class="text-white hover:text-secondary py-2 border-b border-gray-700">作品展示</a>
+                <a href="#upload" class="text-white hover:text-secondary py-2 border-b border-gray-700">上传作品</a>
+                <a href="#contact" class="text-white hover:text-secondary py-2">联系我</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 英雄区 -->
+    <section id="hero" class="relative h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="https://picsum.photos/id/180/1920/1080" alt="作品背景" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-dark/60"></div>
+        </div>
+        <div class="container mx-auto px-4 z-10 text-center">
+            <div class="inline-flex mb-6">
+                <div class="logo-container text-white scale-150">
+                    <span class="logo-m" style="color: white;">M</span>
+                    <span class="logo-i" style="color: #36CBCB;">i</span><span class="logo-dot"></span>
+                    <span class="logo-t" style="color: white;">t</span>
+                    <span class="logo-c" style="color: #36CBCB;">c</span>
+                    <span class="logo-h" style="color: white;">h</span>
+                </div>
+            </div>
+            <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-bold text-white mb-4 leading-tight">
+                探索<span class="text-secondary">创意</span>的无限可能
+            </h1>
+            <p class="text-[clamp(1rem,2vw,1.25rem)] text-gray-200 max-w-2xl mx-auto mb-8">
+                展示个人作品合集，记录创作历程，分享设计与技术的融合之美
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#works" class="px-8 py-3 bg-primary text-white rounded-full hover:bg-primary/90 transition-colors">
+                    浏览作品
+                </a>
+                <a href="#upload" class="px-8 py-3 bg-transparent border-2 border-white text-white rounded-full hover:bg-white/10 transition-colors">
+                    上传作品
+                </a>
+            </div>
+        </div>
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <a href="#about" class="text-white text-3xl">
+                <i class="fa fa-angle-down"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- 个人介绍 -->
+    <section id="about" class="py-20 bg-white section-fade">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-4">关于我</h2>
+                <div class="w-20 h-1 bg-primary mx-auto"></div>
+            </div>
+            <div class="flex flex-col lg:flex-row gap-12 items-center">
+                <div class="lg:w-1/3">
+                    <div class="relative">
+                        <img src="https://picsum.photos/id/1012/600/600" alt="Mitch头像" class="w-full h-auto rounded-2xl shadow-lg">
+                        <div class="absolute -bottom-5 -right-5 bg-primary text-white p-4 rounded-full shadow-lg flex items-center justify-center">
+                            <div class="logo-container">
+                                <span class="logo-m" style="color: white; font-size: 1.5rem;">M</span>
+                                <span class="logo-i" style="color: #36CBCB; font-size: 1.3rem;">i</span><span class="logo-dot"></span>
+                                <span class="logo-t" style="color: white; font-size: 1.4rem;">t</span>
+                                <span class="logo-c" style="color: #36CBCB; font-size: 1.4rem;">c</span>
+                                <span class="logo-h" style="color: white; font-size: 1.5rem;">h</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:w-2/3">
+                    <h3 class="text-2xl font-semibold mb-4">你好，我是<span class="text-primary">Mitch</span></h3>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        一名专注于创意设计与技术开发的创作者，拥有多年的作品创作经验。
+                        热衷于探索不同领域的创作形式，将设计美学与技术实现完美结合。
+                    </p>
+                    <p class="text-gray-600 mb-8 leading-relaxed">
+                        本平台展示我在各个领域的作品，包括平面设计、网页开发、创意项目等。
+                        希望通过作品分享，与更多志同道合的创作者交流学习，共同成长。
+                    </p>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-8">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-primary mb-2">100+</div>
+                            <p class="text-gray-600">完成作品</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-primary mb-2">20+</div>
+                            <p class="text-gray-600">合作项目</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-primary mb-2">15+</div>
+                            <p class="text-gray-600">获奖作品</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-primary mb-2">5k+</div>
+                            <p class="text-gray-600">作品浏览</p>
+                        </div>
+                    </div>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors">
+                            <i class="fa fa-behance"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors">
+                            <i class="fa fa-dribbble"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors">
+                            <i class="fa fa-github"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors">
+                            <i class="fa fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 作品展示 -->
+    <section id="works" class="py-20 bg-gray-50 section-fade">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-4">作品展示</h2>
+                <div class="w-20 h-1 bg-primary mx-auto mb-6"></div>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    这里展示了我近年来的部分作品，包括设计项目、开发作品、创意合集等内容
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                <!-- 作品卡片1 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-md card-hover">
+                    <img src="https://picsum.photos/id/119/600/400" alt="UI设计作品集" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <span class="inline-block px-3 py-1 bg-primary/10 text-primary text-sm rounded-full mb-4">UI设计</span>
+                        <h3 class="text-xl font-semibold mb-3">移动端应用UI设计</h3>
+                        <p class="text-gray-600 mb-4">为健康类应用设计的全套UI界面，包含50+页面设计和交互原型...</p>
+                        <a href="#" class="text-primary font-medium hover:text-secondary transition-colors">
+                            查看详情 <i class="fa fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 作品卡片2 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-md card-hover">
+                    <img src="https://picsum.photos/id/160/600/400" alt="网站开发项目" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <span class="inline-block px-3 py-1 bg-primary/10 text-primary text-sm rounded-full mb-4">开发</span>
+                        <h3 class="text-xl font-semibold mb-3">电商网站开发</h3>
+                        <p class="text-gray-600 mb-4">基于React和Node.js开发的全功能电商平台，包含支付和物流模块...</p>
+                        <a href="#" class="text-primary font-medium hover:text-secondary transition-colors">
+                            查看详情 <i class="fa fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#" class="inline-block px-8 py-3 bg-primary text-white rounded-full hover:bg-primary/90 transition-colors">
+                    查看更多作品 <i class="fa fa-long-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 作品上传功能 -->
+    <section id="upload" class="py-20 bg-white section-fade">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-4">上传作品</h2>
+                <div class="w-20 h-1 bg-primary mx-auto mb-6"></div>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    分享你的创作作品，添加到个人作品集展示
+                </p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto bg-gray-50 rounded-2xl p-8 shadow-md">
+                <form id="uploadForm" enctype="multipart/form-data" class="space-y-6">
+                    <!-- 作品标题 -->
+                    <div>
+                        <label for="title" class="block text-gray-700 mb-2 font-medium">作品标题</label>
+                        <input type="text" id="title" name="title" required
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors"
+                               placeholder="输入作品名称">
+                    </div>
+                    
+                    <!-- 作品分类 -->
+                    <div>
+                        <label for="category" class="block text-gray-700 mb-2 font-medium">作品分类</label>
+                        <select id="category" name="category" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors">
+                            <option value="" disabled selected>选择作品分类</option>
+                            <option value="ui">UI设计</option>
+                            <option value="dev">开发项目</option>
+                            <option value="brand">品牌设计</option>
+                            <option value="illustration">插画</option>
+                            <option value="3d">3D设计</option>
+                            <option value="video">视频制作</option>
+                            <option value="other">其他类别</option>
+                        </select>
+                    </div>
+                    
+                    <!-- 作品描述 -->
+                    <div>
+                        <label for="description" class="block text-gray-700 mb-2 font-medium">作品描述</label>
+                        <textarea id="description" name="description" rows="4" required
+                                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors"
+                                  placeholder="详细描述你的作品内容、创作思路、使用工具等"></textarea>
+                    </div>
+                    
+                    <!-- 作品标签 -->
+                    <div>
+                        <label for="tags" class="block text-gray-700 mb-2 font-medium">作品标签</label>
+                        <input type="text" id="tags" name="tags"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors"
+                               placeholder="输入标签，用逗号分隔">
+                        <p class="text-gray-500 text-sm mt-1">例如：UI设计,移动端,Figma</p>
+                    </div>
+                    
+                    <!-- 文件上传区域 -->
+                    <div>
+                        <label class="block text-gray-700 mb-2 font-medium">作品图片/文件</label>
+                        <div id="fileDropArea" class="file-drop rounded-lg p-8 text-center cursor-pointer">
+                            <input type="file" id="fileUpload" name="fileUpload" multiple accept="image/*,video/*,.pdf,.zip"
+                                   class="hidden">
+                            <div class="flex flex-col items-center justify-center">
+                                <i class="fa fa-cloud-upload text-5xl text-gray-400 mb-4"></i>
+                                <p class="text-gray-600 mb-2">点击或拖拽文件到此处上传</p>
+                                <p class="text-gray-500 text-sm">支持图片、视频、PDF、压缩包格式，最大50MB</p>
+                                <div id="filePreview" class="mt-4 hidden"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 作品状态 -->
+                    <div>
+                        <label class="block text-gray-700 mb-2 font-medium">作品状态</label>
+                        <div class="flex space-x-4">
+                            <label class="flex items-center">
+                                <input type="radio" name="status" value="public" checked
+                                       class="w-4 h-4 text-primary focus:ring-primary/50">
+                                <span class="ml-2 text-gray-700">公开展示</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="status" value="private"
+                                       class="w-4 h-4 text-primary focus:ring-primary/50">
+                                <span class="ml-2 text-gray-700">仅自己可见</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- 提交按钮 -->
+                    <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                        <button type="submit" class="flex-1 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors flex items-center justify-center">
+                            <i class="fa fa-paper-plane mr-2"></i> 提交作品
+                        </button>
+                        <button type="reset" class="flex-1 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors">
+                            重置表单
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系我 -->
+    <section id="contact" class="py-20 bg-gray-50 section-fade">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-4">联系我</h2>
+                <div class="w-20 h-1 bg-primary mx-auto mb-6"></div>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    如果你有任何问题、合作意向或想交流创作心得，欢迎随时联系我
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div>
+                    <div class="bg-white rounded-2xl p-8 shadow-md">
+                        <h3 class="text-xl font-semibold mb-6">发送消息</h3>
+                        <form>
+                            <div class="mb-4">
+                                <label for="contactName" class="block text-gray-700 mb-2">姓名</label>
+                                <input type="text" id="contactName" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50">
+                            </div>
+                            <div class="mb-4">
+                                <label for="contactEmail" class="block text-gray-700 mb-2">邮箱</label>
+                                <input type="email" id="contactEmail" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50">
+                            </div>
+                            <div class="mb-6">
+                                <label for="contactMessage" class="block text-gray-700 mb-2">消息内容</label>
+                                <textarea id="contactMessage" rows="5" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"></textarea>
+                            </div>
+                            <button type="submit" class="w-full py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
+                                发送消息 <i class="fa fa-paper-plane ml-2"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="bg-white rounded-2xl p-8 h-full shadow-md">
+                        <h3 class="text-xl font-semibold mb-6">联系方式</h3>
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mr-4 flex-shrink-0">
+                                    <i class="fa fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium mb-1">邮箱</h4>
+                                    <p class="text-gray-600">mitch@example.com</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mr-4 flex-shrink-0">
+                                    <i class="fa fa-phone"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium mb-1">电话</h4>
+                                    <p class="text-gray-600">+86 123 4567 8901</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mr-4 flex-shrink-0">
+                                    <i class="fa fa-map-marker"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium mb-1">地址</h4>
+                                    <p class="text-gray-600">上海市浦东新区创意产业园</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mr-4 flex-shrink-0">
+                                    <i class="fa fa-clock-o"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium mb-1">工作时间</h4>
+                                    <p class="text-gray-600">周一至周五: 9:00 - 18:00</p>
+                                    <p class="text-gray-600">周末: 10:00 - 16:00</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8">
+                            <h4 class="font-medium mb-4">关注我的社交媒体</h4>
+                            <div class="flex space-x-4">
+                                <a href="#" class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors">
+                                    <i class="fa fa-behance"></i>
+                                </a>
+                                <a href="#" class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors">
+                                    <i class="fa fa-dribbble"></i>
+                                </a>
+                                <a href="#" class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors">
+                                    <i class="fa fa-github"></i>
+                                </a>
+                                <a href="#" class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors">
+                                    <i class="fa fa-instagram"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+                <a href="#" class="text-2xl font-bold mb-4 md:mb-0 flex items-center">
+                    <div class="logo-container mr-2">
+                        <span class="logo-m">M</span>
+                        <span class="logo-i">i</span><span class="logo-dot"></span>
+                        <span class="logo-t">t</span>
+                        <span class="logo-c">c</span>
+                        <span class="logo-h">h</span>
+                    </div>
+                    <span>的作品</span>
+                </a>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-secondary transition-colors">
+                        <i class="fa fa-behance"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-secondary transition-colors">
+                        <i class="fa fa-dribbble"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-secondary transition-colors">
+                        <i class="fa fa-github"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-secondary transition-colors">
+                        <i class="fa fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 mb-4 md:mb-0">© 2025 Mitch的作品. 保留所有权利.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-secondary transition-colors">隐私政策</a>
+                    <a href="#" class="text-gray-400 hover:text-secondary transition-colors">使用条款</a>
+                    <a href="#" class="text-gray-400 hover:text-secondary transition-colors">关于网站</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // 导航栏滚动效果
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-dark/95', 'shadow-md');
+                navbar.classList.remove('bg-transparent');
+            } else {
+                navbar.classList.remove('bg-dark/95', 'shadow-md');
+                navbar.classList.add('bg-transparent');
+            }
+        });
+
+        // 移动端菜单切换
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        menuBtn.addEventListener('click', function() {
+            mobileMenu.classList.toggle('hidden');
+            const icon = menuBtn.querySelector('i');
+            if (icon.classList.contains('fa-bars')) {
+                icon.classList.replace('fa-bars', 'fa-times');
+            } else {
+                icon.classList.replace('fa-times', 'fa-bars');
+            }
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // 关闭移动端菜单
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                        menuBtn.querySelector('i').classList.replace('fa-times', 'fa-bars');
+                    }
+                }
+            });
+        });
+
+        // 滚动时元素渐入效果
+        const fadeElements = document.querySelectorAll('.section-fade');
+        const fadeObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        fadeElements.forEach(element => {
+            fadeObserver.observe(element);
+        });
+
+        // 文件上传功能
+        const fileDropArea = document.getElementById('fileDropArea');
+        const fileUpload = document.getElementById('fileUpload');
+        const filePreview = document.getElementById('filePreview');
+
+        // 点击上传区域触发文件选择
+        fileDropArea.addEventListener('click', () => {
+            fileUpload.click();
+        });
+
+        // 拖拽效果
+        fileDropArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            fileDropArea.classList.add('active');
+        });
+
+        fileDropArea.addEventListener('dragleave', () => {
+            fileDropArea.classList.remove('active');
+        });
+
+        fileDropArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            fileDropArea.classList.remove('active');
+            
+            if (e.dataTransfer.files.length) {
+                fileUpload.files = e.dataTransfer.files;
+                showFilePreview(e.dataTransfer.files);
+            }
+        });
+
+        // 文件选择后预览
+        fileUpload.addEventListener('change', () => {
+            if (fileUpload.files.length) {
+                showFilePreview(fileUpload.files);
+            }
+        });
+
+        // 显示文件预览
+        function showFilePreview(files) {
+            filePreview.innerHTML = '';
+            filePreview.classList.remove('hidden');
+            
+            const filesArray = Array.from(files);
+            const previewContainer = document.createElement('div');
+            previewContainer.className = 'grid grid-cols-2 sm:grid-cols-3 gap-4 mt-4';
+            
+            filesArray.forEach((file, index) => {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'bg-white p-2 rounded-lg shadow-sm';
+                
+                if (file.type.startsWith('image/')) {
+                    const img = document.createElement('img');
+                    img.src = URL.createObjectURL(file);
+                    img.className = 'w-full h-24 object-cover rounded';
+                    img.alt = `预览 ${index + 1}`;
+                    fileItem.appendChild(img);
+                } else if (file.type.startsWith('video/')) {
+                    const video = document.createElement('video');
+                    video.src = URL.createObjectURL(file);
+                    video.className = 'w-full h-24 object-cover rounded';
+                    video.controls = true;
+                    fileItem.appendChild(video);
+                } else {
+                    const icon = document.createElement('div');
+                    icon.className = 'w-full h-24 flex items-center justify-center bg-gray-100 rounded';
+                    
+                    let fileIcon = 'fa-file-o';
+                    if (file.name.endsWith('.pdf')) fileIcon = 'fa-file-pdf-o';
+                    else if (file.name.endsWith('.zip') || file.name.endsWith('.rar')) fileIcon = 'fa-file-zip-o';
+                    
+                    icon.innerHTML = `<i class="fa ${fileIcon} text-4xl text-gray-400"></i>`;
+                    fileItem.appendChild(icon);
+                }
+                
+                const fileName = document.createElement('p');
+                fileName.className = 'text-sm text-gray-600 mt-2 truncate';
+                fileName.textContent = file.name;
+                
+                const fileSize = document.createElement('p');
+                fileSize.className = 'text-xs text-gray-500';
+                fileSize.textContent = formatFileSize(file.size);
+                
+                fileItem.appendChild(fileName);
+                fileItem.appendChild(fileSize);
+                previewContainer.appendChild(fileItem);
+            });
+            
+            filePreview.appendChild(previewContainer);
+            
+            const fileCount = document.createElement('p');
+            fileCount.className = 'text-sm text-primary font-medium mt-4';
+            fileCount.textContent = `已选择 ${files.length} 个文件`;
+            filePreview.appendChild(fileCount);
+        }
+
+        // 格式化文件大小
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        // 表单提交处理
+        document.getElementById('uploadForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // 这里可以添加表单验证和AJAX提交逻辑
+            const formData = new FormData(e.target);
+            
+            // 模拟上传
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa fa-spinner fa-spin mr-2"></i> 上传中...';
+            
+            // 模拟API请求
+            setTimeout(() => {
+                alert('作品上传成功！');
+                e.target.reset();
+                filePreview.innerHTML = '';
+                filePreview.classList.add('hidden');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
